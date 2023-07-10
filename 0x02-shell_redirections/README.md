@@ -1,0 +1,1 @@
+I/O redirection is accomplished using a redirection operator which allows the user to specify the input or output data be redirected to (or from) a file. Note that redirection always results in the data stream going to or coming from a file (the terminal is also considered a file).
