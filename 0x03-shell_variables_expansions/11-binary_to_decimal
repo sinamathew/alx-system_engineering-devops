@@ -1,2 +1,2 @@
-VimCrypt~03!´S¼Â“P:†ÏÕ4(^ğdÁm×
-¬÷§¸s¾TlRLúR;.j?LnÈ
+#!/bin/bash
+echo $((2#$BINARY))
