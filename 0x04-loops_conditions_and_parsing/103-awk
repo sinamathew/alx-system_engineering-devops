@@ -1,0 +1,3 @@
+function cmp (i1, v1, i2, v2){	return v1 == v2 ? i1 < i2 : v1 < v2;}
+{	++logs[$1 " " $9];}
+END {	PROCINFO["sorted_in"] = "cmp"; for (i in logs) printf("    %3d %s\n", logs[i], i);}
