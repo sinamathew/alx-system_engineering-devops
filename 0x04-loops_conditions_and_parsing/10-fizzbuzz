@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# FizzBuzz in bash
+for i in {1..100}; do
+	m5=$((i % 5))
+	m3=$((i % 3))
+	if [ $m3 == 0 ] && [ $m5 == 0 ];
+	then echo FizzBuzz
+	elif [ $m3 == 0 ];
+	then echo Fizz
+	elif [ $m5 == 0 ];
+	then echo Buzz
+	else echo $i
+	fi
+done
