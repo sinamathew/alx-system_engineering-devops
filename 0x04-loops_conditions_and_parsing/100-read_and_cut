@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# reads and cuts the /etc/passwd file
+while read -r line; do
+	read -r -a cols <<< "$(cut --output-delimiter=' ' -d ':' -f 1- <<< "$line")"
+	printf "%s:%s:%s\n" "${cols[4]}" "${cols[2]}" "${cols[5]}"
+done < /etc/passwd
