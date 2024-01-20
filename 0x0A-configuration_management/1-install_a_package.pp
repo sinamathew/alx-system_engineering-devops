@@ -9,3 +9,9 @@ package { 'flask':
   provider => pip3,
 }
 
+# Ensure Werkzeug is present
+package { 'Werkzeug':
+  ensure   => '2.1.1',
+  provider => pip3,
+}
+
