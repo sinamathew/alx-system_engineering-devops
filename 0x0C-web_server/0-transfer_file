@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Uses `scp` to transfer file to a remote server
-if [ @# -gt 4 ]; then
+if test $# -gt 4; then
   scp -o StrictHostKeyChecking=no -i "$4" "$1" "$3@$2":~
 
 else
