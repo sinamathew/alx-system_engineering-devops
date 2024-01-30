@@ -48,8 +48,8 @@ backend http_back
 EOL
 
 # Restart HAProxy to apply the changes
-sudo service start haproxy
+sudo service haproxy start
 
 # Enable HAProxy to start on boot
-sudo service enable haproxy
+sudo service haproxy enable
 
