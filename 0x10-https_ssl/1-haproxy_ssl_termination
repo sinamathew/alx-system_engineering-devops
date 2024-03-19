@@ -1,0 +1,23 @@
+global
+    log stdout format raw local0
+
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    timeout connect 5000
+    timeout client  50000
+    timeout server  50000
+
+frontend sina-frontend
+    bind *:80
+    bind *:443 ssl crt /etc/haproxy/certs/www.sinamathew.tech.pem
+    redirect scheme https code 301 if !{ ssl_fc }
+    mode http
+    default_backend sina-backend
+
+backend sina-backend
+    server 219651-web-01 54.198.66.140:80 check
+    server 219651-web-02 54.173.151.179:80 check
+
