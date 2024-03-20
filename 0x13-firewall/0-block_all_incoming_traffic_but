@@ -1,0 +1,6 @@
+#!/bin/bash
+# Uncomplicated Firewall setup script
+sudo ufw enable
+sudo ufw allow ssh
+sudo ufw allow http
+sudo ufw allw https
