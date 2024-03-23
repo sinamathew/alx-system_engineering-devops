@@ -1,0 +1,42 @@
+#!/bin/bash
+# Working Hard
+
+# Check if password argument is provided
+if [ -z "$1" ]; then
+  echo "Error: Please provide a password argument for MySQL connection."
+  exit 1
+fi
+
+# Define variables
+MYSQL_USER="root"
+MYSQL_PASSWORD="$1"
+BACKUP_FILE="backup.sql"
+TODAY=$(date +%d-%m-%Y)
+ARCHIVE_FILE="$TODAY.tar.gz"
+
+# Dump all databases
+mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
+
+# Check if dump was successful
+if [ $? -eq 0 ]; then
+  echo "MySQL dump created successfully: $BACKUP_FILE"
+else
+  echo "Error: Failed to create MySQL dump."
+  exit 1
+fi
+
+# Create compressed archive
+tar -czvf "$ARCHIVE_FILE" "$BACKUP_FILE"
+
+# Check if archive creation was successful
+if [ $? -eq 0 ]; then
+  echo "Compressed archive created: $ARCHIVE_FILE"
+  # Clean up the temporary dump file (optional)
+  rm -f "$BACKUP_FILE"
+else
+  echo "Error: Failed to create compressed archive."
+  exit 1
+fi
+
+echo "MySQL backup completed!"
+
