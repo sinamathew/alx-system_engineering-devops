@@ -1,0 +1,32 @@
+-- Connect to the MySQL server
+mysql -u root -p
+
+-- Enter the MySQL root password when prompted
+
+-- Create the tyrell_corp database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS tyrell_corp;
+
+-- Switch to the tyrell_corp database
+USE tyrell_corp;
+
+-- Create the nexus6 table
+CREATE TABLE IF NOT EXISTS nexus6 (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    model VARCHAR(50),
+    manufacture_date DATE
+);
+
+-- Insert at least one entry into the nexus6 table
+INSERT INTO nexus6 (name, model, manufacture_date)
+VALUES ('Nexus 6', 'Nexus', '2023-01-01');
+
+-- Grant SELECT permission to holberton_user
+GRANT SELECT ON tyrell_corp.nexus6 TO 'holberton_user'@'localhost';
+
+-- Flush privileges to apply changes
+FLUSH PRIVILEGES;
+
+-- Exit the MySQL shell
+exit
+

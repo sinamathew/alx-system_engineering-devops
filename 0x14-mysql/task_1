@@ -1,0 +1,23 @@
+-- Connect to the MySQL server
+mysql -u root -p
+
+-- Enter the MySQL root password when prompted
+
+-- Create the user on web-01 if it doesn't already exist
+CREATE USER IF NOT EXISTS 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
+
+-- Grant permissions to check primary/replica status
+GRANT REPLICATION CLIENT ON *.* TO 'holberton_user'@'localhost';
+
+-- Create the user on web-02 if it doesn't already exist
+CREATE USER IF NOT EXISTS 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
+
+-- Grant permissions to check primary/replica status
+GRANT REPLICATION CLIENT ON *.* TO 'holberton_user'@'localhost';
+
+-- Flush privileges to apply changes
+FLUSH PRIVILEGES;
+
+-- Exit the MySQL shell
+exit
+
