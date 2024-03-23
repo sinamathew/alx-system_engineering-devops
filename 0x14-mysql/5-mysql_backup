@@ -1,42 +1,47 @@
-#!/bin/bash
-# Working Hard
+#!/usr/bin/env bash
+# Script Description:
+# This script generates a MySQL dump of all databases, compresses it into a tar.gz archive,
+# and optionally cleans up the temporary dump file. It provides informative error handling
+# and follows recommended best practices for enhanced clarity and security.
 
-# Check if password argument is provided
-if [ -z "$1" ]; then
-  echo "Error: Please provide a password argument for MySQL connection."
+# Function to generate MySQL dump and compressed archive
+backup_mysql() {
+  local mysql_user="root"  # Replace with a dedicated user (recommended)
+  local mysql_password="$1"  # Password argument
+  local backup_file="backup.sql"
+  local today=$(date +%d-%m-%Y)
+  local archive_file="$today.tar.gz"
+
+  # Dump all databases
+  mysqldump -u "$mysql_user" -p"$mysql_password" --all-databases > "$backup_file" || {
+    echo "Error: Failed to create MySQL dump."
+    exit 1
+  }
+
+  echo "MySQL dump created successfully: $backup_file"
+
+  # Create compressed archive
+  tar -czvf "$archive_file" "$backup_file" || {
+    echo "Error: Failed to create compressed archive: $archive_file"
+    exit 1
+  }
+
+  echo "Compressed archive created: $archive_file"
+
+  # Optional cleanup (uncomment to remove the temporary dump file)
+  # rm -f "$backup_file"
+}
+
+# Usage:
+# ./5-mysql_backup <your_mysql_password>  # Pass password as an argument
+
+# Main execution
+if [ $# -eq 0 ]; then
+  echo "Error: Please provide your MySQL password as an argument."
   exit 1
 fi
 
-# Define variables
-MYSQL_USER="root"
-MYSQL_PASSWORD="$1"
-BACKUP_FILE="backup.sql"
-TODAY=$(date +%d-%m-%Y)
-ARCHIVE_FILE="$TODAY.tar.gz"
-
-# Dump all databases
-mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
-
-# Check if dump was successful
-if [ $? -eq 0 ]; then
-  echo "MySQL dump created successfully: $BACKUP_FILE"
-else
-  echo "Error: Failed to create MySQL dump."
-  exit 1
-fi
-
-# Create compressed archive
-tar -czvf "$ARCHIVE_FILE" "$BACKUP_FILE"
-
-# Check if archive creation was successful
-if [ $? -eq 0 ]; then
-  echo "Compressed archive created: $ARCHIVE_FILE"
-  # Clean up the temporary dump file (optional)
-  rm -f "$BACKUP_FILE"
-else
-  echo "Error: Failed to create compressed archive."
-  exit 1
-fi
+backup_mysql "$1"
 
 echo "MySQL backup completed!"
 
