@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Run command as a lesss privileged user
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <username>"
+    exit 1
+fi
+
+su -c 'whoami' "$1"
+
